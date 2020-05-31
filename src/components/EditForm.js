@@ -4,7 +4,9 @@ import { useFirestore } from "react-redux-firebase"; //useFirestore is a HOOK ne
 
 function EditForm(props) {
   const firestore = useFirestore(); //call useFirestore() function and save our Firestore reference in a constant called firestore
-  const { indCounter } = props;
+  let id = "7EQ421dEd5ecndUQW5iM"; //bmw
+  
+ // const { indCounter } = props;
   function handleEditTicket(event) {
     event.preventDefault();
     // props.onEditTicket();
@@ -13,7 +15,7 @@ function EditForm(props) {
       carPrice: event.target.carPrice.value,
     };
     return firestore.update(
-      { collection: "counter", doc: indCounter.id },
+      { collection: "counter", doc: id },
       propertiesToUpdate
     ); //Firestore will merge the two arg objects
   }
@@ -36,7 +38,7 @@ function EditForm(props) {
             placeholder="Enter Car Price ($)"
           />
           <button className="buttonPrimary btn btn-primary" type="submit">
-            Submit
+            Edit Existing car (ID hardcoded)
           </button>
         </form>
       </div>

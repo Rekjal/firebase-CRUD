@@ -23,7 +23,7 @@ const rrfProps = {
 
 
 ReactDOM.render(
-  <Provider store={store}>
+  <Provider store={store}> 
     <ReactReduxFirebaseProvider {...rrfProps}>
       <App />
     </ReactReduxFirebaseProvider>

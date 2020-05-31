@@ -6,15 +6,9 @@ import { useFirestore } from "react-redux-firebase";
 
 // We need to import hooks functionality from both react-redux and react-redux-firebase.
 
-
-function GetCar(props) {
-  // The useFirestoreConnect() hook comes from react-redux-firebase.
-  useFirestoreConnect([{ collection: "counter" }]);
-
-  // The useSelector() hook comes from react-redux.
-  const counter = useSelector((state) => state.firestore.ordered.counter);
-
-  // react-redux-firebase also offers a useful isLoaded() function.
+function GetDataInRealTime(props) {  // 
+  useFirestoreConnect([{ collection: "counter" }]); //#####The useFirestoreConnect() hook comes from react-redux-firebase. -specify the collection or documents we want to listen to in Firestore.
+  const counter = useSelector((state) => state.firestore.ordered.counter); //firestoreReducer passes data into a firestore data slice - from there grab state.firestore.tickets. save our collection in a constant called counter.
   if (isLoaded(counter)) {
     return (
       <React.Fragment>
@@ -49,10 +43,10 @@ function GetCar(props) {
   }
 }
 
-GetCar.propTypes = {
+GetDataInRealTime.propTypes = {
   // We no longer need ticketList props.
   // ticketList: PropTypes.object,
   onTicketSelection: PropTypes.func,
 };
 
-export default GetCar;
+export default GetDataInRealTime;

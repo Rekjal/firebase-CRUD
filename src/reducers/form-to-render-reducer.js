@@ -6,5 +6,3 @@ export default (state = false, action2) => {
       return state;
   }
 };
-
-export default rootReducer;

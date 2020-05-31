@@ -1,49 +1,41 @@
 import React, { useState } from "react";
 import { useFirestore } from "react-redux-firebase";
-// import PropTypes from "prop-types";
-import GetCar from "./GetCar";
+import PropTypes from "prop-types";
+import GetDataInRealTime from "./GetDataInRealTime";
 import EditForm from "./EditForm";
 import { withFirestore } from "react-redux-firebase";
+import { useFirestoreConnect, isLoaded, isEmpty } from "react-redux-firebase"; //hook allows us to listen for changes to Firestore without using an HOC in a class component.
+import { useSelector } from "react-redux"; //hook allows us to extract data from a Redux store.
 
 function Counter(props) {
   const firestore = useFirestore();
-  var currentlyVisibleForm = <GetCar />;
-  var currentlyVisibleForm2 = "Null value";
 
-  const getData = (id) => {
-    var firestoreTicket;
-    props.firestore
-      .get({ collection: "counter", doc: id })
-      .then((indCounter) => {
-        firestoreTicket = {
-          carBrand: indCounter.get("carBrand"),
-        };
-      });
-    return firestoreTicket;
+  const noRealTimeGetMethod = () => {
+    var id = "7EQ421dEd5ecndUQW5iM"; //alfa
+    var carBrandVar;
+    var temp;
+    var str;
+    props.firestore.get({ collection: "counter", doc: id }).then((ticket) => {
+      const firestoreTicket = {
+        carBrand: ticket.get("carBrand"),
+      };
+      console.log("Inside getData: Data receieved was ");
+      str = JSON.parse(JSON.stringify(firestoreTicket));
+      console.log(str);
+      carBrandVar = str.carBrand;
+      console.log(carBrandVar);
+      return carBrandVar;
+    });
   };
 
   function addTicketToFirestore(event) {
+    // add record to FireStore
     event.preventDefault();
-    let id = "gpFPlbtn8wvMhr6TqbBg"; //bmw
-    //console.log(" Car brand received is Data receieved was " + getData(id)[this.carBrand]);
-
-    var str = JSON.stringify(getData(id), null, 4); // (Optional) beautiful indented output.
-    
-    
-    console.log(" Car brand received is Data receieved was ");
-    console.log(str);
-
-    // currentlyVisibleForm2 = (
-    //   <React.Fragment> Car brand received is Data receieved was {getData(id)} </React.Fragment>
-    // );
-
     return firestore.collection("counter").add({
       carBrand: event.target.carBrand.value,
       carPrice: event.target.carPrice.value,
       timeOpen: firestore.FieldValue.serverTimestamp(),
     });
-    // currentlyVisibleForm = "none";
-    // (<GetCar/>);
   }
 
   //const base64 = btoa(str);
@@ -51,6 +43,55 @@ function Counter(props) {
 
   const [counter, setCounter] = useState(0);
   const [hidden, setHidden] = useState(true);
+  const [localState, setLocalState] = useState(false);
+  var currentlyVisibleForm2 = null;
+  var currentlyVisibleForm = null;
+  if (localState) {
+    currentlyVisibleForm = (
+      <React.Fragment>
+        <h3>Listing of Existing records in HBase in RealTime</h3>
+        <GetDataInRealTime />
+        {
+          <div>
+            <br></br> <br></br>
+            <form onSubmit={addTicketToFirestore}>
+              <input
+                required
+                type="text"
+                name="carBrand"
+                placeholder="Enter Car Brand"
+              />
+              <input
+                required
+                type="number"
+                name="carPrice"
+                placeholder="Enter Car Price ($)"
+              />
+              <button className="buttonPrimary btn btn-primary" type="submit">
+                Add new Car
+              </button>
+            </form>
+          </div>
+        }
+      </React.Fragment>
+    );
+    currentlyVisibleForm2 = (
+      <React.Fragment>
+        {" "}
+        <br></br>
+        <h1>
+          See console.log for record fetched by manual Get Method by hardcoding
+          ID or record{" "}
+        </h1>
+        <br></br> {noRealTimeGetMethod()}
+      </React.Fragment>
+    );
+  } else {
+    currentlyVisibleForm = <EditForm />;
+  }
+
+  // var str =JSON.parse(JSON.stringify(noRealTimeGetMethod()));
+  // var carBrandVar = str.carBrand;
 
   return (
     <React.Fragment>
@@ -58,30 +99,17 @@ function Counter(props) {
       <button onClick={() => setCounter(counter + 1)}>Count!</button>
       <button onClick={() => setHidden(!hidden)}>Hide/Show</button>
 
-      <div>
-        <br></br> <br></br>
-        <form onSubmit={addTicketToFirestore}>
-          <input
-            required
-            type="text"
-            name="carBrand"
-            placeholder="Enter Car Brand"
-          />
-          <input
-            required
-            type="number"
-            name="carPrice"
-            placeholder="Enter Car Price ($)"
-          />
-          <button className="buttonPrimary btn btn-primary" type="submit">
-            Submit
-          </button>
-        </form>
-      </div>
-      <div>{currentlyVisibleForm}</div>
-      <div>{currentlyVisibleForm2}</div>
+      {/* {localState ? <h1>localState is {localState}</h1> : <h1>Count Hidden</h1>} */}
+      <br></br>
+      <br></br>
+      <button onClick={() => setLocalState(!localState)}>
+        List OR Edit Component
+      </button>
+
+      {currentlyVisibleForm}
+      {currentlyVisibleForm2}
     </React.Fragment>
   );
 }
 
-export default withFirestore(Counter);
+export default withFirestore(Counter); //this makes Firestore available to our application via props.firestore.
