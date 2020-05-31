@@ -38,7 +38,7 @@ function EditForm(props) {
             placeholder="Enter Car Price ($)"
           />
           <button className="buttonPrimary btn btn-primary" type="submit">
-            Edit Existing car (ID hardcoded)
+            Update Existing Record (ID hardcoded)
           </button>
         </form>
       </div>

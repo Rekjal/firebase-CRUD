@@ -50,10 +50,9 @@ function Counter(props) {
   //const base64 = btoa(str);
   //const decoded = atob(base64);
 
-  const [counter, setCounter] = useState(0);
-  const [hidden, setHidden] = useState(true);
+  // const [counter, setCounter] = useState(0);
+  // const [hidden, setHidden] = useState(true);
   const [localState, setLocalState] = useState(false);
-  // const [deleteOrGet, selectDeleteOrGet] = useState(false);
 
   var currentlyVisibleForm2 = null;
   var currentlyVisibleForm = null;
@@ -106,11 +105,17 @@ function Counter(props) {
 
   return (
     <React.Fragment>
-      {hidden ? <h1>{counter}</h1> : <h1>Count Hidden</h1>}
+      {/* {hidden ? <h1>{counter}</h1> : <h1>Count Hidden</h1>}
       <button onClick={() => setCounter(counter + 1)}>Count!</button>
       <button onClick={() => setHidden(!hidden)}>Hide/Show</button>
+      <br></br> <br></br> */}
+       <br></br> <br></br>
+
+      <button onClick={() => setLocalState(!localState)}>Render Fetch/Add Records OR Edit Record Page</button>
       <br></br> <br></br>
-      <button onClick={() => setLocalState(!localState)}>List OR Edit Component</button>
+      <br></br> <br></br>
+      <br></br> <br></br>
+      <br></br> <br></br>
       <br></br> <br></br>
       {/* {{deleteOrGet} ? text = {"deleteRecord"} : {"getRecord"}} */}
       <button onClick={() => noRealTimeGetMethod()}>Non-Real Time Get!</button>
