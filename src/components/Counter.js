@@ -10,6 +10,15 @@ import { useSelector } from "react-redux"; //hook allows us to extract data from
 function Counter(props) {
   const firestore = useFirestore();
 
+  function deleteTicket(event) {
+      event.preventDefault();
+      const id = event.target.id.value;
+      console.log("Inside deleteTicket(). Captured ID is ");
+      console.log(id);
+     // id = "ujWx9Hl8mVmmDkz0Jujo";
+    props.firestore.delete({collection: 'counter', doc: id});
+  }
+
   const noRealTimeGetMethod = () => {
     var id = "7EQ421dEd5ecndUQW5iM"; //alfa
     var carBrandVar;
@@ -44,6 +53,8 @@ function Counter(props) {
   const [counter, setCounter] = useState(0);
   const [hidden, setHidden] = useState(true);
   const [localState, setLocalState] = useState(false);
+  // const [deleteOrGet, selectDeleteOrGet] = useState(false);
+
   var currentlyVisibleForm2 = null;
   var currentlyVisibleForm = null;
   if (localState) {
@@ -98,13 +109,24 @@ function Counter(props) {
       {hidden ? <h1>{counter}</h1> : <h1>Count Hidden</h1>}
       <button onClick={() => setCounter(counter + 1)}>Count!</button>
       <button onClick={() => setHidden(!hidden)}>Hide/Show</button>
+      <br></br> <br></br>
+      <button onClick={() => setLocalState(!localState)}>List OR Edit Component</button>
+      <br></br> <br></br>
+      {/* {{deleteOrGet} ? text = {"deleteRecord"} : {"getRecord"}} */}
+      <button onClick={() => noRealTimeGetMethod()}>Non-Real Time Get!</button>
+      <br></br> <br></br>
 
-      {/* {localState ? <h1>localState is {localState}</h1> : <h1>Count Hidden</h1>} */}
-      <br></br>
-      <br></br>
-      <button onClick={() => setLocalState(!localState)}>
-        List OR Edit Component
-      </button>
+      <form onSubmit={deleteTicket}>
+          <input
+            required
+            type="text"
+            name="id"
+            placeholder="Enter ID"
+          />
+          <button className="buttonPrimary btn btn-primary" type="submit">
+            Add ID of Record to be Deleted
+          </button>
+        </form>        
 
       {currentlyVisibleForm}
       {currentlyVisibleForm2}
