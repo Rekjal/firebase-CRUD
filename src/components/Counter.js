@@ -1,28 +1,26 @@
 import React, { useState } from "react";
 import { useFirestore } from "react-redux-firebase";
-import PropTypes from "prop-types";
 import GetDataInRealTime from "./GetDataInRealTime";
 import EditForm from "./EditForm";
 import { withFirestore } from "react-redux-firebase";
-import { useFirestoreConnect, isLoaded, isEmpty } from "react-redux-firebase"; //hook allows us to listen for changes to Firestore without using an HOC in a class component.
-import { useSelector } from "react-redux"; //hook allows us to extract data from a Redux store.
+//import { useFirestoreConnect, isLoaded, isEmpty } from "react-redux-firebase"; //hook allows us to listen for changes to Firestore without using an HOC in a class component.
+//import { useSelector } from "react-redux"; //hook allows us to extract data from a Redux store.
 
 function Counter(props) {
   const firestore = useFirestore();
 
   function deleteTicket(event) {
-      event.preventDefault();
-      const id = event.target.id.value;
-      console.log("Inside deleteTicket(). Captured ID is ");
-      console.log(id);
-     // id = "ujWx9Hl8mVmmDkz0Jujo";
-    props.firestore.delete({collection: 'counter', doc: id});
+    event.preventDefault();
+    const id = event.target.id.value;
+    console.log("Inside deleteTicket(). Captured ID is ");
+    console.log(id);
+    // id = "ujWx9Hl8mVmmDkz0Jujo";
+    props.firestore.delete({ collection: "counter", doc: id }); //access Firestore via this.props.firestore. Then we call the delete() method.
   }
 
   const noRealTimeGetMethod = () => {
     var id = "7EQ421dEd5ecndUQW5iM"; //alfa
     var carBrandVar;
-    var temp;
     var str;
     props.firestore.get({ collection: "counter", doc: id }).then((ticket) => {
       const firestoreTicket = {
@@ -50,8 +48,6 @@ function Counter(props) {
   //const base64 = btoa(str);
   //const decoded = atob(base64);
 
-  // const [counter, setCounter] = useState(0);
-  // const [hidden, setHidden] = useState(true);
   const [localState, setLocalState] = useState(false);
 
   var currentlyVisibleForm2 = null;
@@ -100,39 +96,21 @@ function Counter(props) {
     currentlyVisibleForm = <EditForm />;
   }
 
-  // var str =JSON.parse(JSON.stringify(noRealTimeGetMethod()));
-  // var carBrandVar = str.carBrand;
-
   return (
     <React.Fragment>
-      {/* {hidden ? <h1>{counter}</h1> : <h1>Count Hidden</h1>}
-      <button onClick={() => setCounter(counter + 1)}>Count!</button>
-      <button onClick={() => setHidden(!hidden)}>Hide/Show</button>
-      <br></br> <br></br> */}
-       <br></br> <br></br>
-
-      <button onClick={() => setLocalState(!localState)}>Render Fetch/Add Records OR Edit Record Page</button>
       <br></br> <br></br>
-      <br></br> <br></br>
-      <br></br> <br></br>
-      <br></br> <br></br>
-      <br></br> <br></br>
-      {/* {{deleteOrGet} ? text = {"deleteRecord"} : {"getRecord"}} */}
+      <button onClick={() => setLocalState(!localState)}>
+        Render Fetch/Add Records OR Edit Record Page
+      </button>
+      <br></br> <br></br> <br></br> <br></br>  <br></br> <br></br>   <br></br> <br></br> <br></br> <br></br>
       <button onClick={() => noRealTimeGetMethod()}>Non-Real Time Get!</button>
       <br></br> <br></br>
-
       <form onSubmit={deleteTicket}>
-          <input
-            required
-            type="text"
-            name="id"
-            placeholder="Enter ID"
-          />
-          <button className="buttonPrimary btn btn-primary" type="submit">
-            Add ID of Record to be Deleted
-          </button>
-        </form>        
-
+        <input required type="text" name="id" placeholder="Enter ID" />
+        <button className="buttonPrimary btn btn-primary" type="submit">
+          Add ID of Record to be Deleted
+        </button>
+      </form>
       {currentlyVisibleForm}
       {currentlyVisibleForm2}
     </React.Fragment>

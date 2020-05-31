@@ -1,8 +1,7 @@
 import { useSelector } from "react-redux"; //hook allows us to extract data from a Redux store.
-import { useFirestoreConnect, isLoaded, isEmpty } from "react-redux-firebase"; //hook allows us to listen for changes to Firestore without using an HOC in a class component.
+import { useFirestoreConnect, isLoaded } from "react-redux-firebase"; //hook allows us to listen for changes to Firestore without using an HOC in a class component.
 import PropTypes from "prop-types";
-import React, { useState } from "react";
-import { useFirestore } from "react-redux-firebase";
+import React from "react";
 
 // We need to import hooks functionality from both react-redux and react-redux-firebase.
 
@@ -44,8 +43,6 @@ function GetDataInRealTime(props) {  //
 }
 
 GetDataInRealTime.propTypes = {
-  // We no longer need ticketList props.
-  // ticketList: PropTypes.object,
   onTicketSelection: PropTypes.func,
 };
 

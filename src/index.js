@@ -9,13 +9,15 @@ import rootReducer from "./reducers/index";
 import { ReactReduxFirebaseProvider } from 'react-redux-firebase';
 import { createFirestoreInstance } from 'redux-firestore';
 import firebase from "./firebase";
+import 'firebase/auth'; // authentication related
 
 const store = createStore(rootReducer);
 
 const rrfProps = {
   firebase,
   config: {
-        userProfile: "users"
+        userProfile: "users",
+        useFirestoreForProfile: true,     // authentication related:React Redux Firebase library will allow us to check auth state throughout our application. This is very helpful because otherwise we'd have to do it ourselves using custom reducers.
     },
   dispatch: store.dispatch,
   createFirestoreInstance
