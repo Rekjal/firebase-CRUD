@@ -1,7 +1,7 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
-
+SHOULD SEE THIS LINE IN REMOTE REPO BRANCH AFTER GIT PUSH
 DELETE THIS LINE LATER-asasas
 
 When I pull while on this branch (firebase-CRUD-branch), I should see this line in my remote repo)
