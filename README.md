@@ -1,3 +1,5 @@
+SEE THIS LINE CURRENTLY ONLY ON REMOTE BRANCH ON LOCAL REPO AFTER PULL
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
