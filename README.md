@@ -1,7 +1,11 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
+
 DELETE THIS LINE LATER-asasas
+
+When I pull while on this branch (firebase-CRUD-branch), I should see this line in my remote repo)
+
 In the project directory, you can run:
 
 ### `npm start`
